@@ -11,19 +11,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $statut = isset($_POST['statut']) ? $_POST['statut'] : "";
     $date_debut = isset($_POST['date_debut']) ? $_POST['date_debut'] : "";
     $date_fin = isset($_POST['date_fin']) ? $_POST['date_fin'] : "";
-    $id_fournisseur = isset($_POST['id_fournisseur']) ? $_POST['id_fournisseur'] : null;
+    $id_marche = isset($_POST['id_marche']) ? $_POST['id_marche'] : null; // Updated field to id_marche
 
     try {
-        // Update the policy in the database
+        // Prepare and execute the update query
         $requete = "UPDATE polices_assurance 
-                    SET numero_assurance = ?, libelle_assurance = ?, exige = ?, statut = ?, date_debut = ?, date_fin = ?, id_fournisseur = ?
+                    SET numero_assurance = ?, libelle_assurance = ?, exige = ?, statut = ?, date_debut = ?, date_fin = ?, id_marche = ?
                     WHERE id_police = ?";
-        $params = array($numero_assurance, $libelle_assurance, $exige, $statut, $date_debut, $date_fin, $id_fournisseur, $id_police);
+        $params = array($numero_assurance, $libelle_assurance, $exige, $statut, $date_debut, $date_fin, $id_marche, $id_police);
         $stmt = $pdo->prepare($requete);
         $stmt->execute($params);
 
-        // Redirect to the policies list page
-        header('Location: policeAssurance.php');
+        // Redirect to the policies list page with a success message
+        header('Location: policeAssurance.php?success=1');
         exit();
     } catch (PDOException $e) {
         // Handle any errors

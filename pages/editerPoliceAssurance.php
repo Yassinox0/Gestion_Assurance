@@ -18,7 +18,12 @@ if ($idPolice > 0) {
     header('Location: policeAssurance.php');
     exit();
 }
+
+// Retrieve the list of 'marches' for the dropdown
+$requeteMarches = "SELECT id_marche,numero_marche FROM marches"; // Adjust the table and column names if needed
+$resultatMarches = $pdo->query($requeteMarches);
 ?>
+
 <!DOCTYPE HTML>
 <HTML>
 <head>
@@ -44,7 +49,66 @@ if ($idPolice > 0) {
                             <input type="text" name="numero_assurance" class="form-control" value="<?php echo htmlspecialchars($police['numero_assurance']); ?>" required />
                         </div>
                     </div>
-                    <!-- Other fields... -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Libellé d'Assurance:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="libelle_assurance" class="form-control" value="<?php echo htmlspecialchars($police['libelle_assurance']); ?>" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Exigé:</label>
+                        <div class="col-sm-10">
+                            <select name="exige" class="form-control" required>
+                                <option value="Oui" <?php if ($police['exige'] == 'Oui') echo 'selected'; ?>>Oui</option>
+                                <option value="Non" <?php if ($police['exige'] == 'Non') echo 'selected'; ?>>Non</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Statut:</label>
+                        <div class="col-sm-10">
+                            <select name="statut" class="form-control" required>
+                                <option value="Active" <?php if ($police['statut'] == 'Active') echo 'selected'; ?>>Active</option>
+                                <option value="Expiré" <?php if ($police['statut'] == 'Expiré') echo 'selected'; ?>>Expiré</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date de Début:</label>
+                        <div class="col-sm-10">
+                            <input type="date" name="date_debut" class="form-control" value="<?php echo htmlspecialchars($police['date_debut']); ?>" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date de Fin:</label>
+                        <div class="col-sm-10">
+                            <input type="date" name="date_fin" class="form-control" value="<?php echo htmlspecialchars($police['date_fin']); ?>" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Marché:</label>
+                        <div class="col-sm-10">
+                            <select name="id_marche" class="form-control" required>
+                                <option value="">Sélectionner un marché</option>
+                                <?php
+                                while ($marche = $resultatMarches->fetch()) {
+                                    echo '<option value="' . htmlspecialchars($marche['id_marche']) . '"';
+                                    if ($marche['id_marche'] == $police['id_marche']) {
+                                        echo ' selected';
+                                    }
+                                    echo '>' . htmlspecialchars($marche['numero_marche']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success">Mettre à Jour</button>

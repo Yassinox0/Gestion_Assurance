@@ -105,9 +105,10 @@ if ($reste === 0) {
 
                                         &nbsp;&nbsp;
                                         <a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette police ?')"
-                                           href="supprimerPolice.php?idPolice=<?php echo htmlspecialchars($police['id_police']); ?>">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
+   href="supprimerPoliceAssurance.php?idPolice=<?php echo htmlspecialchars($police['id_police']); ?>">
+    <span class="glyphicon glyphicon-trash"></span>
+</a>
+
                                     </td>
                                 <?php } ?>
                             </tr>
