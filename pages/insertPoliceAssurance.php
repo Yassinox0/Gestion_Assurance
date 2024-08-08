@@ -10,12 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $statut = isset($_POST['statut']) ? $_POST['statut'] : "";
     $date_debut = isset($_POST['date_debut']) ? $_POST['date_debut'] : "";
     $date_fin = isset($_POST['date_fin']) ? $_POST['date_fin'] : "";
-    $id_fournisseur = isset($_POST['id_fournisseur']) ? $_POST['id_fournisseur'] : null;
+    $id_marche = isset($_POST['id_marche']) ? $_POST['id_marche'] : null;
 
     try {
         $requete = "INSERT INTO polices_assurance (numero_assurance, libelle_assurance, exige, statut, date_debut, date_fin, id_marche)
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $params = array($numero_assurance, $libelle_assurance, $exige, $statut, $date_debut, $date_fin, $id_fournisseur);
+        $params = array($numero_assurance, $libelle_assurance, $exige, $statut, $date_debut, $date_fin, $id_marche);
         $stmt = $pdo->prepare($requete);
         $stmt->execute($params);
 

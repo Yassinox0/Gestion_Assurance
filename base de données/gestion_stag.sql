@@ -1,21 +1,6 @@
-drop database if exists gestion_stag;
-create database if not exists gestion_stag;
-use gestion_stag;
-
-create table stagiaire(
-    idStagiaire int(4) auto_increment primary key,
-    nom varchar(50),
-    prenom varchar(50),
-    civilite varchar(1),
-    photo varchar(100),
-    idFiliere int(4)
-);
-
-create table filiere(
-    idFiliere int(4) auto_increment primary key,
-    nomFiliere varchar(50),
-    niveau varchar(50)
-);
+drop database if exists Assurance;
+create database if not exists Assurance;
+use Assurance;
 
 create table utilisateur(
     iduser int(4) auto_increment primary key,
@@ -26,47 +11,47 @@ create table utilisateur(
     pwd varchar(255)
 );
 
-Alter table stagiaire add constraint 
-    foreign key(idFiliere) references filiere(idFiliere);
-
-INSERT INTO filiere(nomFiliere,niveau) VALUES
-	('TSDI','TS'),
-	('TSGE','TS'),
-	('TGI','T'),
-	('TSRI','TS'),
-	('TCE','T');	
-	
+CREATE TABLE fournisseurs (
+    id_fournisseur INT AUTO_INCREMENT PRIMARY KEY,
+    ICE VARCHAR(20) NOT NULL,
+    IF VARCHAR(20) NOT NULL,
+    nom_fournisseur VARCHAR(100) NOT NULL,
+    adresse TEXT NOT NULL,
+    ville VARCHAR(50) NOT NULL
+);
+CREATE TABLE marches (
+    id_marche INT AUTO_INCREMENT PRIMARY KEY,
+    numero_marche VARCHAR(50) NOT NULL,
+    objet TEXT NOT NULL,
+    direction VARCHAR(100) NOT NULL,
+    montant DECIMAL(15, 2) NOT NULL,
+    devise VARCHAR(10) NOT NULL,
+    annee YEAR NOT NULL,
+    id_fournisseur INT,
+    FOREIGN KEY (id_fournisseur) REFERENCES fournisseurs(id_fournisseur)
+);
+CREATE TABLE polices_assurance (
+    id_police INT AUTO_INCREMENT PRIMARY KEY,
+    numero_assurance VARCHAR(50) NOT NULL,
+    libelle_assurance VARCHAR(100) NOT NULL,
+    exige ENUM('Oui', 'Non') NOT NULL,
+    statut ENUM('Expiré', 'Active') NOT NULL,
+    date_debut DATE NOT NULL,
+    date_fin DATE NOT NULL,
+    id_marche INT,
+    FOREIGN KEY (id_marche) REFERENCES marches(id_marche)
+);
 	
 INSERT INTO utilisateur(login,email,role,etat,pwd) VALUES 
-    ('admin','admin@gmail.com','ADMIN',1,md5('123')),
-    ('user1','user1@gmail.com','VISITEUR',0,md5('123')),
+    ('Yassine','admin@gmail.com','ADMIN',1,md5('123')),
+    ('Youness','user1@gmail.com','ADMIN',1,md5('123')),
     ('user2','user2@gmail.com','VISITEUR',1,md5('123'));	
 
-INSERT INTO stagiaire(nom,prenom,civilite,photo,idFiliere) VALUES
-    ('SAADAOUI','MOHAMMED','M','Chrysantheme.jpg',1),
-	('CHAABI','OMAR','M','Desert.jpg',2),
-	('SALIM','RACHIDA','F','Hortensias.jpg',3),
-	('FAOUZI','NABILA','F','Meduses.jpg',1),
-	('ETTAOUSSI','KAMAL','M','Penguins.jpg',2),
-	('EZZAKI','ABDELKARIM','M','Tulipes.jpg',3),
-    
-     ('SAADAOUI','MOHAMMED','M','Chrysantheme.jpg',1),
-	('CHAABI','OMAR','M','Desert.jpg',2),
-	('SALIM','RACHIDA','F','Hortensias.jpg',3),
-	('FAOUZI','NABILA','F','Meduses.jpg',1),
-	('ETTAOUSSI','KAMAL','M','Penguins.jpg',2),
-	('EZZAKI','ABDELKARIM','M','Tulipes.jpg',3),
 
-    ('SAADAOUI','MOHAMMED','M','Chrysantheme.jpg',1),
-	('CHAABI','OMAR','M','Desert.jpg',2),
-	('SALIM','RACHIDA','F','Hortensias.jpg',3),
-	('FAOUZI','NABILA','F','Meduses.jpg',1),
-	('ETTAOUSSI','KAMAL','M','Penguins.jpg',2),
-	('EZZAKI','ABDELKARIM','M','Tulipes.jpg',3);
-  
 
-select * from filiere;
-select * from stagiaire;
+select * from fournisseurs;
+select * from marches;
+select * from polices_assurance;
 select * from utilisateur;
 
 

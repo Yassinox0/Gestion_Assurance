@@ -2,9 +2,9 @@
 require_once('identifier.php');
 require_once('connexiondb.php');
 
-// Fetch suppliers for the dropdown
-$requeteFournisseurs = "SELECT id_fournisseur, nom_fournisseur FROM fournisseurs";
-$resultatFournisseurs = $pdo->query($requeteFournisseurs);
+// Fetch marchés for the dropdown
+$requeteMarches = "SELECT id_marche, numero_marche FROM marches";
+$resultatMarches = $pdo->query($requeteMarches);
 ?>
 <!DOCTYPE HTML>
 <HTML>
@@ -66,12 +66,12 @@ $resultatFournisseurs = $pdo->query($requeteFournisseurs);
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Fournisseur:</label>
+                        <label class="col-sm-2 control-label">Marché:</label>
                         <div class="col-sm-10">
-                            <select name="id_fournisseur" class="form-control" required>
-                                <?php while ($fournisseur = $resultatFournisseurs->fetch()) { ?>
-                                    <option value="<?php echo $fournisseur['id_fournisseur']; ?>">
-                                        <?php echo $fournisseur['nom_fournisseur']; ?>
+                            <select name="id_marche" class="form-control" required>
+                                <?php while ($marche = $resultatMarches->fetch()) { ?>
+                                    <option value="<?php echo $marche['id_marche']; ?>">
+                                        <?php echo $marche['numero_marche']; ?>
                                     </option>
                                 <?php } ?>
                             </select>
